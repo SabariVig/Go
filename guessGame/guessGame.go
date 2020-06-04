@@ -7,21 +7,21 @@ import (
 )
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	rand.Seed(time.Now().UnixNano()) //Initilizes A Random Number Every Time Else Go Seeds The Rand Func At Complie Time
 	C := rand.Intn(10)
 	fmt.Print(C)
+
 	for i := 1; ; i++ {
 		inp := 0
 		fmt.Print("Enter A Number: ")
 		fmt.Scan(&inp)
+
 		if inp < C {
-			fmt.Print("Try A Greater Number\n")
-		}
-		if inp > C {
-			print("Try A Smaller Number\n")
-		}
-		if inp == C {
-			fmt.Println("You Gussed In", i, "Number Of Times")
+			fmt.Println("Try A Greater Number")
+		} else if inp > C {
+			println("Try A Smaller Number")
+		} else {
+			fmt.Println("You Gussed In", i, "Tries")
 			break
 
 		}
