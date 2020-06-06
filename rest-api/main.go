@@ -1,51 +1,52 @@
 package main
 
 import (
-	"log"
+
 	// "fmt"
 	"fmt"
+	"log"
+	"os"
 
-	"github.com/go-bongo/bongo"
 	"github.com/gofiber/fiber"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/sabarivig/go/rest-api/books"
 	"github.com/sabarivig/go/rest-api/database"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
-
-type user struct {
-	bongo.DocumentBase `bson:",inline"`
-	name               string
-	pass               string
-}
 
 func helloWorld(c *fiber.Ctx) {
 	c.Send("Hello!!")
 
 }
 
+func initilizeDB() {
+	var err error
+	database.DBConn, err = gorm.Open("postgres", os.Getenv("POSTGRESS_URI"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Connection Opened to Database")
+	database.DBConn.AutoMigrate(&books.Book{})
+	fmt.Println("Migration Completed")
+}
+
+func hello(c *fiber.Ctx) {
+
+	c.Send("Hello")
+
+}
 func routes(c *fiber.App) {
 	c.Get("/books", books.GetBooks)
+	c.Get("/", hello)
 	c.Get("/book/:id", books.GetBook)
-	c.Post("/book/:id", books.NewBook)
+	c.Put("/book/", books.NewBook)
 	c.Delete("/book/:id", books.DeleteBook)
-}
-func databaseTese() {
-	fmt.Print("Hello")
-	err := database.Client.Connect(database.Ctx)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer database.Client.Disconnect(database.Ctx)
-	err = database.Client.Ping(database.Ctx, readpref.Primary())
-	if err != nil {
-		log.Fatal(err)
-	}
-
 }
 
 func main() {
-	databaseTese()
+	initilizeDB()
 	app := fiber.New()
 	routes(app)
+	defer database.DBConn.Close()
 	app.Listen(3000)
 }
