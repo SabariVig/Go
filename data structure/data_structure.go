@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	arr := array()
+	arr, _ := array()
 	for i, v := range arr {
 		fmt.Println("Index:", i, "Value:", v)
 	}
@@ -14,11 +14,11 @@ func main() {
 	}
 
 }
-func array() ([]int,error) {
+func array() ([]int, error) {
 	x := []int{2, 5}
 	x = append(x, 4)
 	// fmt.Println("Array:", x)
-	return x, nil 
+	return x, nil
 
 }
 
