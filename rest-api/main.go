@@ -40,6 +40,7 @@ func routes(c *fiber.App) {
 	c.Get("/", hello)
 	c.Get("/book/:id", books.GetBook)
 	c.Put("/book/", books.NewBook)
+	c.Put("/book/:id", books.UpdateBook)
 	c.Delete("/book/:id", books.DeleteBook)
 }
 

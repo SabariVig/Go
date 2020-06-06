@@ -46,9 +46,25 @@ func NewBook(c *fiber.Ctx) {
 
 }
 
+//UpdateBook Updates The Book based on the book ID
+func UpdateBook(c *fiber.Ctx) {
+	db := database.DBConn
+	id := c.Params("id")
+	book := new(Book)
+
+	db.First(&book, id)
+	if err := c.BodyParser(book); err != nil {
+		c.Status(404).Send(err)
+		return
+	}
+	db.Save(&book)
+	c.JSON(book)
+
+}
+
 //DeleteBook Deletes A By Based On ID
 func DeleteBook(c *fiber.Ctx) {
-	id :=c.Params("id")
+	id := c.Params("id")
 	db := database.DBConn
 	var book Book
 	db.First(&book, id)
