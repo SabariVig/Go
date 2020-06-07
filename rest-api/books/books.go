@@ -6,6 +6,7 @@ import (
 	"github.com/sabarivig/go/rest-api/database"
 )
 
+//Book Struct 
 type Book struct {
 	gorm.Model
 	Name   string `json:"name"`
