@@ -2,3 +2,4 @@
 7.[Reverse Integer](https://leetcode.com/problems/reverse-integer/)
 9.[Palindrome](https://leetcode.com/problems/palindrome-number/)
 14.[Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix)
+14.[Valid Parenthesis](https://leetcode.com/problems/valid-parentheses/)
